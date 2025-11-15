@@ -92,7 +92,7 @@ export default function LoginPage() {
                                 </Link>
                             </Grid>
                             <Grid>
-                                <Link href="/cadastro" variant="body2" color="primary">
+                                <Link href="/register" variant="body2" color="primary">
                                     Criar uma conta
                                 </Link>
                             </Grid>
