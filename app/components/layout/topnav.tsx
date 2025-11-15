@@ -3,6 +3,7 @@ import { AppBar, Toolbar, Typography, IconButton, Avatar } from '@mui/material';
 import { NotificationsNone, LightMode, DarkMode } from '@mui/icons-material';
 import { drawerWidth } from './sidenav';
 import { useTheme } from '@/app/contexts/ThemeContext';
+import Link from 'next/link';
 
 interface TopNavProps {
     userName: string;
@@ -35,7 +36,15 @@ export function TopNav({ userName }: TopNavProps) {
                 <IconButton sx={{ color: 'text.secondary' }}>
                     <NotificationsNone />
                 </IconButton>
-                <Avatar sx={{ ml: 2, bgcolor: 'primary.main' }}>{userName.charAt(0)}</Avatar>
+                <IconButton
+                    component={Link}
+                    href="/profile"
+                    sx={{ ml: 1 }}
+                >
+                    <Avatar sx={{ bgcolor: 'primary.main', cursor: 'pointer' }}>
+                        {userName.charAt(0)}
+                    </Avatar>
+                </IconButton>
             </Toolbar>
         </AppBar>
     );
