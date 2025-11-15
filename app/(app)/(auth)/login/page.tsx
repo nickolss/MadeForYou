@@ -22,6 +22,7 @@ export default function LoginPage() {
             email: data.get('email'),
             senha: data.get('password'),
         });
+
         // TODO: Autenticação com firebase
     };
 
