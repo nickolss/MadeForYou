@@ -11,6 +11,7 @@ import { QuickTasks } from '../components/dashboard/quick-tasks';
 import { QuickProjects } from '../components/dashboard/quick-projects';
 import { QuickHabits } from '../components/dashboard/quick-habits';
 import { QuickNotes } from '../components/dashboard/quick-notes';
+import { AdSpace } from '../components/ads/ad-space';
 
 const mockTasks: Task[] = [
   { id: 1, text: 'Finalizar o relatório de marketing', completed: false, priority: 'high' },
@@ -108,6 +109,10 @@ export default function HomePage() {
           recentTransactions={recentTransactions}
         />
 
+        <Box sx={{ mb: 3 }}>
+          <AdSpace size="banner" adId="dashboard-top" />
+        </Box>
+
         <Box sx={{ display: 'flex', gap: 3, flexDirection: { xs: 'column', md: 'row' }, flexWrap: 'wrap' }}>
           <Box sx={{ flex: { xs: '1 1 100%', md: '1 1 calc(50% - 12px)' } }}>
             <QuickTasks tasks={tasks} onToggleTask={handleToggleTask} />
@@ -121,6 +126,10 @@ export default function HomePage() {
           <Box sx={{ flex: { xs: '1 1 100%', md: '1 1 calc(50% - 12px)' } }}>
             <QuickNotes notes={mockNotes} />
           </Box>
+        </Box>
+
+        <Box sx={{ mt: 3 }}>
+          <AdSpace size="banner" adId="dashboard-bottom" />
         </Box>
       </Box>
     </Box>

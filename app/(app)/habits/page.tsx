@@ -8,6 +8,7 @@ import { TopNav } from '@/app/components/layout/topnav';
 import { SideNav } from '@/app/components/layout/sidenav';
 import { HabitStats } from '@/app/components/habits/habit-stats';
 import { HabitListEnhanced } from '@/app/components/habits/habit-list-enhanced';
+import { AdSpace } from '@/app/components/ads/ad-space';
 
 const mockHabits: Habit[] = [
     {
@@ -213,6 +214,10 @@ export default function HabitsPage() {
 
                 <HabitStats {...stats} />
 
+                <Box sx={{ my: 3 }}>
+                    <AdSpace size="inline" adId="habits-top" />
+                </Box>
+
                 <Grid container spacing={3}>
                     <Grid item xs={12}>
                         <HabitListEnhanced
@@ -224,6 +229,10 @@ export default function HabitsPage() {
                         />
                     </Grid>
                 </Grid>
+
+                <Box sx={{ my: 3 }}>
+                    <AdSpace size="banner" adId="habits-bottom" />
+                </Box>
 
                 <Dialog open={openDialog} onClose={() => setOpenDialog(false)} maxWidth="sm" fullWidth>
                     <DialogTitle>

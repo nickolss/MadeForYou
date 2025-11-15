@@ -9,6 +9,7 @@ import { SideNav } from '@/app/components/layout/sidenav';
 import { NoteStats } from '@/app/components/notes/note-stats';
 import { NoteFilters } from '@/app/components/notes/note-filters';
 import { NoteListEnhanced } from '@/app/components/notes/note-list-enhanced';
+import { AdSpace } from '@/app/components/ads/ad-space';
 
 const mockNotes: Note[] = [
     {
@@ -229,6 +230,10 @@ export default function NotesPage() {
                     categories={categories}
                 />
 
+                <Box sx={{ my: 3 }}>
+                    <AdSpace size="inline" adId="notes-top" />
+                </Box>
+
                 <Grid container spacing={3}>
                     <Grid item xs={12}>
                         <NoteListEnhanced
@@ -240,6 +245,10 @@ export default function NotesPage() {
                         />
                     </Grid>
                 </Grid>
+
+                <Box sx={{ my: 3 }}>
+                    <AdSpace size="banner" adId="notes-bottom" />
+                </Box>
 
                 <Dialog
                     open={openDialog}

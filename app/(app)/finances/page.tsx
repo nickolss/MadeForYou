@@ -8,6 +8,7 @@ import { TopNav } from '@/app/components/layout/topnav';
 import { SideNav } from '@/app/components/layout/sidenav';
 import { AccountList } from '@/app/components/finances/account-list';
 import { TransactionList } from '@/app/components/finances/transaction-list';
+import { AdSpace } from '@/app/components/ads/ad-space';
 
 const mockAccounts: Account[] = [
     { id: 1, name: 'Conta Principal', type: 'checking', balance: 5000.00, bank: 'Banco do Brasil' },
@@ -96,9 +97,18 @@ export default function FinancesPage() {
                         <AccountList accounts={mockAccounts} />
                     </Grid>
                     <Grid item xs={12}>
+                        <Box sx={{ my: 3 }}>
+                            <AdSpace size="banner" adId="finances-middle" />
+                        </Box>
+                    </Grid>
+                    <Grid item xs={12}>
                         <TransactionList transactions={mockTransactions} />
                     </Grid>
                 </Grid>
+
+                <Box sx={{ mt: 3 }}>
+                    <AdSpace size="banner" adId="finances-bottom" />
+                </Box>
             </Box>
         </Box>
     );

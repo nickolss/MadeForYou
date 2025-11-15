@@ -9,6 +9,7 @@ import { SideNav } from '@/app/components/layout/sidenav';
 import { TaskStats } from '@/app/components/tasks/task-stats';
 import { TaskFilters } from '@/app/components/tasks/task-filters';
 import { TaskListEnhanced } from '@/app/components/tasks/task-list-enhanced';
+import { AdSpace } from '@/app/components/ads/ad-space';
 
 const mockTasks: Task[] = [
     {
@@ -195,6 +196,10 @@ export default function TasksPage() {
                     onSearchChange={setSearchQuery}
                 />
 
+                <Box sx={{ my: 3 }}>
+                    <AdSpace size="inline" adId="tasks-top" />
+                </Box>
+
                 <Grid container spacing={3}>
                     <Grid item xs={12}>
                         <TaskListEnhanced
@@ -205,6 +210,10 @@ export default function TasksPage() {
                         />
                     </Grid>
                 </Grid>
+
+                <Box sx={{ my: 3 }}>
+                    <AdSpace size="banner" adId="tasks-bottom" />
+                </Box>
 
                 <Dialog open={openDialog} onClose={() => setOpenDialog(false)} maxWidth="sm" fullWidth>
                     <DialogTitle>

@@ -9,6 +9,7 @@ import { SideNav } from '@/app/components/layout/sidenav';
 import { ProjectStats } from '@/app/components/projects/project-stats';
 import { ProjectFilters } from '@/app/components/projects/project-filters';
 import { ProjectListEnhanced } from '@/app/components/projects/project-list-enhanced';
+import { AdSpace } from '@/app/components/ads/ad-space';
 
 const mockProjects: Project[] = [
     {
@@ -205,6 +206,10 @@ export default function ProjectsPage() {
                     onSearchChange={setSearchQuery}
                 />
 
+                <Box sx={{ my: 3 }}>
+                    <AdSpace size="inline" adId="projects-top" />
+                </Box>
+
                 <Grid container spacing={3}>
                     <Grid item xs={12}>
                         <ProjectListEnhanced
@@ -215,6 +220,10 @@ export default function ProjectsPage() {
                         />
                     </Grid>
                 </Grid>
+
+                <Box sx={{ my: 3 }}>
+                    <AdSpace size="banner" adId="projects-bottom" />
+                </Box>
 
                 <Dialog open={openDialog} onClose={() => setOpenDialog(false)} maxWidth="sm" fullWidth>
                     <DialogTitle>
