@@ -1,7 +1,8 @@
-import { Drawer, Toolbar, Typography, List, ListItem, ListItemButton, ListItemIcon, ListItemText, useTheme } from '@mui/material';
-import { Home, CheckCircleOutline, AccountTree, AccountBalance, Psychology, Note } from '@mui/icons-material';
+import { Drawer, Toolbar, Typography, List, ListItem, ListItemButton, ListItemIcon, ListItemText, useTheme, Box, Divider } from '@mui/material';
+import { Home, CheckCircleOutline, AccountTree, AccountBalance, Psychology, Note, Person } from '@mui/icons-material';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { AdSpace } from '../ads/ad-space';
 
 export const drawerWidth = 240;
 
@@ -13,6 +14,8 @@ const navItems = [
     { text: 'Notas', icon: <Note />, path: '/notes' },
     { text: 'Finanças', icon: <AccountBalance />, path: '/finances' },
 ];
+
+const profileItem = { text: 'Meu Perfil', icon: <Person />, path: '/profile' };
 
 export function SideNav() {
     const theme = useTheme();
@@ -27,6 +30,8 @@ export function SideNav() {
                 '& .MuiDrawer-paper': {
                     width: drawerWidth,
                     boxSizing: 'border-box',
+                    display: 'flex',
+                    flexDirection: 'column',
                 },
             }}
             variant="permanent"
@@ -49,7 +54,7 @@ export function SideNav() {
                     MadeForYou
                 </Typography>
             </Toolbar>
-            <List>
+            <List sx={{ flexGrow: 1 }}>
                 {navItems.map((item) => {
                     const isActive = pathname === item.path;
                     return (
@@ -91,6 +96,47 @@ export function SideNav() {
                     );
                 })}
             </List>
+            <Divider />
+            <List>
+                <ListItem disablePadding>
+                    <ListItemButton 
+                        component={Link}
+                        href={profileItem.path}
+                        sx={{ 
+                            borderRadius: 1,
+                            mx: 1,
+                            mb: 0.5,
+                            '&:hover': { 
+                                backgroundColor: isDark ? 'rgba(129, 140, 248, 0.1)' : 'rgba(99, 102, 241, 0.08)',
+                            },
+                            ...(pathname === profileItem.path && {
+                                backgroundColor: isDark ? 'rgba(129, 140, 248, 0.15)' : 'rgba(99, 102, 241, 0.1)',
+                                borderLeft: `3px solid ${theme.palette.primary.main}`,
+                            }),
+                            color: pathname === profileItem.path ? 'primary.main' : 'text.primary',
+                        }}
+                    >
+                        <ListItemIcon 
+                            sx={{ 
+                                color: pathname === profileItem.path ? 'primary.main' : 'text.secondary',
+                                minWidth: 40,
+                            }}
+                        >
+                            {profileItem.icon}
+                        </ListItemIcon>
+                        <ListItemText 
+                            primary={profileItem.text}
+                            primaryTypographyProps={{
+                                color: pathname === profileItem.path ? 'primary.main' : 'text.primary',
+                                fontWeight: pathname === profileItem.path ? 600 : 400,
+                            }}
+                        />
+                    </ListItemButton>
+                </ListItem>
+            </List>
+            <Box sx={{ p: 2, mt: 'auto' }}>
+                <AdSpace size="sidebar" adId="sidebar-main" />
+            </Box>
         </Drawer>
     );
 }
