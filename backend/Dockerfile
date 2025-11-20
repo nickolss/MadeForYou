@@ -1,11 +1,23 @@
-FROM eclipse-temurin:21
-
-ARG PORT
-
+FROM eclipse-temurin:21-jdk AS build
 WORKDIR /app
 
-COPY . .
+COPY .mvn/ .mvn
+COPY mvnw pom.xml ./
 
+RUN chmod +x mvnw
+RUN ./mvnw dependency
+
+COPY src ./src
+RUN ./mvnw clean package -DskipTests
+
+FROM eclipse-temurin:21-jre
+WORKDIR /app
+
+COPY --from=build /app/target/*.jar app.jar
+
+ENV PORT=8080
 EXPOSE ${PORT}
 
-CMD ["./mvnw", "spring-boot:run"]
+ENV JAVA_TOOL_OPTIONS="-XX:+UseContainerSupport -Xmx384m -Xms256m"
+
+ENTRYPOINT ["java", "-jar", "app.jar"]

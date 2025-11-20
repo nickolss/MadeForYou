@@ -1,5 +1,7 @@
 services:
   backend:
+    image: nickolss/made-for-you:latest
+    container_name: made-for-you
     build:
       context: ./backend
     ports:
