@@ -75,19 +75,19 @@ export const adConfig = {
     },
 
     slots: {
-        'sidebar-main': '7596390776', 
-        'dashboard-top': '1052816118',
-        'dashboard-bottom': '4800489431',
-        'tasks-top': '4484686867',
-        'tasks-bottom': '9757194840',
-        'projects-top': '3465574075',
-        'projects-bottom': '7131031507',
-        'habits-top': '6935698187',
-        'habits-bottom': '5817949836',
-        'notes-top': '1858523526',
-        'notes-bottom': '3487407764',
-        'finances-middle': '2174326097',
-        'finances-bottom': '2567425379'
+        'sidebar-main': '2751258209', 
+        'dashboard-top': '1801138614',
+        'dashboard-bottom': '6628468621',
+        'tasks-top': '2405318430',
+        'tasks-bottom': '3350024007',
+        'projects-top': '5994043803',
+        'projects-bottom': '2036942333',
+        'habits-top': '',
+        'habits-bottom': '',
+        'notes-top': '',
+        'notes-bottom': '',
+        'finances-middle': '',
+        'finances-bottom': ''
     },
 };
 
