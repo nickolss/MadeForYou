@@ -80,6 +80,22 @@ export const adConfig = {
             // Tamanhos padrão: 320x100 (Large Mobile Banner), 468x60 (Banner)
         },
     },
+
+    slots: {
+        'sidebar-main': '7596390776', 
+        'dashboard-top': '1052816118',
+        'dashboard-bottom': '4800489431',
+        'tasks-top': '4484686867',
+        'tasks-bottom': '9757194840',
+        'projects-top': '3465574075',
+        'projects-bottom': '7131031507',
+        'habits-top': '6935698187',
+        'habits-bottom': '5817949836',
+        'notes-top': '1858523526',
+        'notes-bottom': '3487407764',
+        'finances-middle': '2174326097',
+        'finances-bottom': '2567425379'
+    },
 };
 
 /**
