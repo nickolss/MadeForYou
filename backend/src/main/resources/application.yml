@@ -1,0 +1,19 @@
+spring:
+  application:
+    name: backend
+    
+  datasource:
+    url: ${DATABASE_URL}
+    username: ${DATABASE_USER}
+    password: ${DATABASE_PASSWORD}
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+
+cors:
+  allowed:
+    origins: ${FRONTEND_URL:http://localhost:3000}
+
+server:
+  port: ${PORT}

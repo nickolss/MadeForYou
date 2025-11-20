@@ -1,0 +1,8 @@
+services:
+  backend:
+    build:
+      context: ./backend
+    ports:
+      - ${PORT}:${PORT}
+    env_file:
+      - .env
