@@ -1,10 +1,3 @@
-/**
- * Configuração de anúncios para o MadeForYou
- * 
- * Este arquivo centraliza as configurações relacionadas a anúncios.
- * Em produção, você pode integrar com Google AdSense, Media.net, ou outras plataformas.
- */
-
 export const adConfig = {
     /**
      * Habilita ou desabilita a exibição de anúncios
