@@ -24,6 +24,7 @@ public class HabitController {
         this.habitService = habitService;
     }
 
+    // --- HABITS ---
     @GetMapping("/habits")
     @Operation(summary = "Listar Hábitos", description = "Busca todos os hábitos cadastrados para um determinado usuário.")
     public ResponseEntity<List<HabitDTO>> getHabits(
@@ -32,6 +33,23 @@ public class HabitController {
         return ResponseEntity.ok(habitService.getHabits(userId));
     }
 
+    @PostMapping("/habits")
+    public ResponseEntity<HabitDTO> createHabit(@RequestParam String userId, @RequestBody HabitDTO habitDTO) {
+        return ResponseEntity.ok(habitService.createHabit(userId, habitDTO));
+    }
+
+    @PatchMapping("/habits/{id}")
+    public ResponseEntity<HabitDTO> updateHabit(@RequestParam String userId, @PathVariable Long id, @RequestBody HabitDTO habitDTO) {
+        return ResponseEntity.ok(habitService.updateHabit(userId, id, habitDTO));
+    }
+
+    @DeleteMapping("/habits/{id}")
+    public ResponseEntity<Void> deleteHabit(@RequestParam String userId, @PathVariable Long id) {
+        habitService.deleteHabit(userId, id);
+        return ResponseEntity.noContent().build();
+    }
+
+    // --- ENTRIES ---
     @GetMapping("/entries")
     @Operation(summary = "Listar Histórico (Entries)", description = "Busca o histórico de execução dos hábitos com filtros de data e hábito específico.")
     public ResponseEntity<List<HabitEntryDTO>> getHabitEntries(
@@ -50,43 +68,15 @@ public class HabitController {
         return ResponseEntity.ok(habitService.getHabitEntries(userId, habitId, startDate, endDate));
     }
 
-    @PostMapping("/habits")
-    @Operation(summary = "Criar Hábito", description = "Cria um novo hábito para o usuário especificado.")
-    public ResponseEntity<HabitDTO> createHabit(
-            @Parameter(description = "ID do usuário", required = true)
-            @RequestParam String userId,
-
-            @RequestBody HabitDTO habitDTO) {
-
-        HabitDTO createdHabit = habitService.createHabit(userId, habitDTO);
-        return ResponseEntity.ok(createdHabit);
+    @PostMapping("/entries")
+    @Operation(summary = "Upsert Entry", description = "Cria ou atualiza uma entrada de hábito (check-in).")
+    public ResponseEntity<HabitEntryDTO> upsertHabitEntry(@RequestParam String userId, @RequestBody HabitEntryDTO entryDTO) {
+        return ResponseEntity.ok(habitService.upsertHabitEntry(userId, entryDTO));
     }
 
-
-    @PatchMapping("/habits/{id}")
-    @Operation(summary = "Atualizar Hábito", description = "Atualiza parcialmente os dados de um hábito.")
-    public ResponseEntity<HabitDTO> updateHabit(
-            @Parameter(description = "ID do usuário", required = true)
-            @RequestParam String userId,
-
-            @Parameter(description = "ID do hábito")
-            @PathVariable Long id,
-
-            @RequestBody HabitDTO habitDTO) {
-
-        return ResponseEntity.ok(habitService.updateHabit(userId, id, habitDTO));
-    }
-
-    @DeleteMapping("/habits/{id}")
-    @Operation(summary = "Deletar Hábito", description = "Remove um hábito e seus registros associados.")
-    public ResponseEntity<Void> deleteHabit(
-            @Parameter(description = "ID do usuário", required = true)
-            @RequestParam String userId,
-
-            @Parameter(description = "ID do hábito")
-            @PathVariable Long id) {
-
-        habitService.deleteHabit(userId, id);
+    @DeleteMapping("/entries/{id}")
+    public ResponseEntity<Void> deleteHabitEntry(@RequestParam String userId, @PathVariable Long id) {
+        habitService.deleteHabitEntry(userId, id);
         return ResponseEntity.noContent().build();
     }
 }

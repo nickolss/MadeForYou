@@ -7,13 +7,14 @@ import org.springframework.data.repository.query.Param;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 public interface HabitEntryRepository extends JpaRepository<HabitEntryEntity, Long> {
 
     @Query("SELECT e FROM HabitEntryEntity e WHERE e.userId = :userId " +
             "AND (:habitId IS NULL OR e.habitId = :habitId) " +
-            "AND (cast(:startDate as date) IS NULL OR e.date >= :startDate) " +
-            "AND (cast(:endDate as date) IS NULL OR e.date <= :endDate) " +
+            "AND (:startDate IS NULL OR e.date >= :startDate) " +
+            "AND (:endDate IS NULL OR e.date <= :endDate) " +
             "ORDER BY e.date DESC")
     List<HabitEntryEntity> findEntries(
             @Param("userId") String userId,
@@ -21,4 +22,7 @@ public interface HabitEntryRepository extends JpaRepository<HabitEntryEntity, Lo
             @Param("startDate") LocalDate startDate,
             @Param("endDate") LocalDate endDate
     );
+
+    // Método necessário para o Upsert (verificar se já existe entrada naquele dia)
+    Optional<HabitEntryEntity> findByUserIdAndHabitIdAndDate(String userId, Long habitId, LocalDate date);
 }
