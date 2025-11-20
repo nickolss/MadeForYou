@@ -5,7 +5,8 @@ COPY .mvn/ .mvn
 COPY mvnw pom.xml ./
 
 RUN chmod +x mvnw
-RUN ./mvnw dependency
+
+RUN ./mvnw dependency:go-offline
 
 COPY src ./src
 RUN ./mvnw clean package -DskipTests
@@ -18,6 +19,6 @@ COPY --from=build /app/target/*.jar app.jar
 ENV PORT=8080
 EXPOSE ${PORT}
 
-ENV JAVA_TOOL_OPTIONS="-XX:+UseContainerSupport -Xmx384m -Xms256m"
+ENV JAVA_TOOL_OPTIONS="-XX:+UseContainerSupport -Xmx350m -Xms128m"
 
 ENTRYPOINT ["java", "-jar", "app.jar"]
