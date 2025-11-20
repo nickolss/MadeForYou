@@ -87,4 +87,34 @@ public class HabitService {
 
         return convertToHabitDTO(savedEntity);
     }
+
+    public HabitDTO updateHabit(String userId, Long habitId, HabitDTO updates) {
+        HabitEntity entity = habitRepository.findById(habitId)
+                .orElseThrow(() -> new RuntimeException("Hábito não encontrado"));
+
+        if (!entity.getUserId().equals(userId)) {
+            throw new RuntimeException("Acesso negado ao hábito");
+        }
+
+        if (updates.getName() != null) entity.setName(updates.getName());
+        if (updates.getDescription() != null) entity.setDescription(updates.getDescription());
+        if (updates.getColor() != null) entity.setColor(updates.getColor());
+        if (updates.getFrequency() != null) entity.setFrequency(updates.getFrequency());
+        if (updates.getTargetDays() != null) entity.setTargetDays(updates.getTargetDays());
+
+        entity.setUpdatedAt(LocalDateTime.now());
+
+        return convertToHabitDTO(habitRepository.save(entity));
+    }
+
+    public void deleteHabit(String userId, Long habitId) {
+        HabitEntity entity = habitRepository.findById(habitId)
+                .orElseThrow(() -> new RuntimeException("Hábito não encontrado"));
+
+        if (!entity.getUserId().equals(userId)) {
+            throw new RuntimeException("Acesso negado: Você não pode deletar este hábito");
+        }
+
+        habitRepository.delete(entity);
+    }
 }

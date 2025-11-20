@@ -61,4 +61,32 @@ public class HabitController {
         HabitDTO createdHabit = habitService.createHabit(userId, habitDTO);
         return ResponseEntity.ok(createdHabit);
     }
+
+
+    @PatchMapping("/habits/{id}")
+    @Operation(summary = "Atualizar Hábito", description = "Atualiza parcialmente os dados de um hábito.")
+    public ResponseEntity<HabitDTO> updateHabit(
+            @Parameter(description = "ID do usuário", required = true)
+            @RequestParam String userId,
+
+            @Parameter(description = "ID do hábito")
+            @PathVariable Long id,
+
+            @RequestBody HabitDTO habitDTO) {
+
+        return ResponseEntity.ok(habitService.updateHabit(userId, id, habitDTO));
+    }
+
+    @DeleteMapping("/habits/{id}")
+    @Operation(summary = "Deletar Hábito", description = "Remove um hábito e seus registros associados.")
+    public ResponseEntity<Void> deleteHabit(
+            @Parameter(description = "ID do usuário", required = true)
+            @RequestParam String userId,
+
+            @Parameter(description = "ID do hábito")
+            @PathVariable Long id) {
+
+        habitService.deleteHabit(userId, id);
+        return ResponseEntity.noContent().build();
+    }
 }
