@@ -175,8 +175,8 @@ fun FinanceScreen(userId: String, onBack: () -> Unit) {
         }
     }
 
-    // --- DIÁLOGOS ---
-
+    // DIÁLOGOS
+    // dialogo de cadastro de uma nova conta
     if (showAccountDialog) {
         AddAccountDialog(
             onDismiss = { showAccountDialog = false },
@@ -192,6 +192,7 @@ fun FinanceScreen(userId: String, onBack: () -> Unit) {
         )
     }
 
+    //controla exibicao do modal para add novas transacoes (receitas/despesas)
     if (showTransactionDialog) {
         AddTransactionDialog(
             accounts = accounts,
