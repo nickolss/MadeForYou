@@ -175,10 +175,9 @@ fun ProjectsScreen(userId: String, onBack: () -> Unit) {
                         },
                         onStatusChange = { proj, newStatus ->
                             scope.launch {
-                                // MUDANÇA: Injetamos o userId que a tela já conhece
                                 val updatedProject = proj.copy(
                                     status = newStatus,
-                                    userId = userId // <--- IMPORTANTE!
+                                    userId = userId 
                                 )
 
                                 val success = projectRepository.updateProject(updatedProject)
@@ -223,7 +222,7 @@ fun ProjectsScreen(userId: String, onBack: () -> Unit) {
 
                     val startDateFormatted = LocalDate.now().toString()
 
-                    // Conversão de Status e Prioridade para inglês (aposta segura)
+                    // Conversão de Status e Prioridade para inglês
                     val statusApi = when(status) {
                         "Planejamento" -> "planning"
                         "Em Progresso" -> "in_progress"
@@ -246,8 +245,8 @@ fun ProjectsScreen(userId: String, onBack: () -> Unit) {
                         name = name,
                         description = desc,
                         progress = if (status == "Concluído") 100 else 0,
-                        status = statusApi, // use a var convertida
-                        priority = priorityApi, // use a var convertida
+                        status = statusApi, // var convertida
+                        priority = priorityApi, // var convertida
                         startDate = LocalDate.now().toString(),
                         dueDate = dueDateFormatted,
                         color = "#818CF8"
