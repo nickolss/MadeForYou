@@ -27,34 +27,37 @@ import retrofit2.http.Query
 
 interface ApiService {
 
+    // TAREFAS
+    // busca todas as tarefas do user
     @GET("api/tasks")
     suspend fun getTasks(@Query("userId") userId: String): List<Task>
 
-    // MUDANÇA AQUI: O Body agora é TaskRequest
+    // cria uma nova tarefa
     @POST("api/tasks")
     suspend fun createTask(
         @Query("userId") userId: String, // ID na URL
         @Body task: TaskRequest          // JSON limpo no corpo
     ): Response<Task>
 
+    // endpoint auxiliar p/ sincronizar os dados do user
     @POST("api/users/sync")
     suspend fun syncUser(@Body user: UserSyncRequest): Response<Any>
 
     @DELETE("api/tasks/{id}")
     suspend fun deleteTask(@Path("id") id: Int): Response<Unit>
 
-    // Atualização também deve usar o Request limpo ou o Task completo dependendo da API
-    // Por segurança, vamos manter Task aqui por enquanto, pois o PUT costuma aceitar ID
+    // atualiza uma tarefa existente
     @PUT("api/tasks/{id}")
     suspend fun updateTask(@Path("id") id: Int, @Body task: Task): Response<Task>
 
+    // deleta uma tarefa
     @DELETE("api/tasks/{id}")
     suspend fun deleteTask(
         @Path("id") id: Int,
         @Query("userId") userId: String
     ): Response<Unit>
 
-    // --- PROJETOS ---
+    // PROJETOS
     @GET("api/projects")
     suspend fun getProjects(@Query("userId") userId: String): List<Project>
 
@@ -70,15 +73,15 @@ interface ApiService {
         @Query("userId") userId: String
     ): Response<Unit>
 
-    // NOVO: Atualizar Projeto (PATCH)
+    // Atualizar Projeto
     @PATCH("api/projects/{id}")
     suspend fun updateProject(
         @Path("id") id: Int,
         @Query("userId") userId: String,
-        @Body project: ProjectRequest // Usamos o mesmo modelo de envio (sem ID no corpo)
+        @Body project: ProjectRequest 
     ): Response<Project>
 
-    // --- HÁBITOS ---
+    // HÁBITOS
     @GET("api/habits")
     suspend fun getHabits(@Query("userId") userId: String): List<Habit>
 
@@ -101,7 +104,7 @@ interface ApiService {
         @Query("userId") userId: String
     ): Response<Unit>
 
-    // --- FINANÇAS: CONTAS ---
+    // FINANÇAS: CONTAS
     @GET("api/finance/accounts")
     suspend fun getAccounts(@Query("userId") userId: String): List<Account>
 
@@ -117,7 +120,7 @@ interface ApiService {
         @Query("userId") userId: String
     ): Response<Unit>
 
-    // --- FINANÇAS: TRANSAÇÕES ---
+    // FINANÇAS: TRANSAÇÕES
     @GET("api/finance/transactions")
     suspend fun getTransactions(@Query("userId") userId: String): List<Transaction>
 
@@ -133,7 +136,7 @@ interface ApiService {
         @Query("userId") userId: String
     ): Response<Unit>
 
-    // --- NOTAS ---
+    // NOTAS
     @GET("api/notes")
     suspend fun getNotes(@Query("userId") userId: String): List<Note>
 
@@ -156,7 +159,7 @@ interface ApiService {
         @Query("userId") userId: String
     ): Response<Unit>
 
-    // --- USUÁRIOS ---
+    // USUÁRIOS
     @GET("api/users/{id}")
     suspend fun getUserProfile(@Path("id") id: String): UserProfile
 
