@@ -53,21 +53,23 @@ import com.nickolss.madeforyou.ui.theme.PriorityMedium
 import com.nickolss.madeforyou.ui.theme.TextGray
 import com.nickolss.madeforyou.ui.theme.TextWhite
 
-
+// input de texto generico
 @Composable
 fun CustomInput(
     value: String,
     onValueChange: (String) -> Unit,
     label: String,
-    isPassword: Boolean = false
+    isPassword: Boolean = false // modo senha
 ) {
-    var passwordVisible by remember { mutableStateOf(false) }
+    var passwordVisible by remember { mutableStateOf(false) } // controlar se a senha aparece ou fica oculta
 
     OutlinedTextField(
         value = value,
         onValueChange = onValueChange,
         label = { Text(label, color = TextGray) },
         singleLine = true,
+
+        // cores proprias
         colors = OutlinedTextFieldDefaults.colors(
             focusedContainerColor = Color.Transparent,
             unfocusedContainerColor = Color.Transparent,
@@ -81,7 +83,11 @@ fun CustomInput(
         modifier = Modifier
             .fillMaxWidth()
             .padding(vertical = 6.dp),
+
+        // se for senha e nao estiver visivel, usa bolinhas. Senao, texto normal
         visualTransformation = if (isPassword && !passwordVisible) PasswordVisualTransformation() else VisualTransformation.None,
+        
+        // icone do olho apenas se for campo de senha
         trailingIcon = if (isPassword) {
             {
                 IconButton(onClick = { passwordVisible = !passwordVisible }) {
@@ -112,7 +118,7 @@ fun PrimaryButton(text: String, onClick: () -> Unit) {
     }
 }
 
-
+// card de resumo (dashboard)
 @Composable
 fun SummaryCard(
     title: String,
@@ -152,13 +158,13 @@ fun SummaryCard(
     }
 }
 
-// --- COMPONENTE: Card de Seção (Corpo) ---
+// Card de Seção
 @Composable
 fun SectionCard(
     title: String,
     linkText: String = "Ver todos →",
     onLinkClick: () -> Unit = {},
-    content: @Composable () -> Unit,
+    content: @Composable () -> Unit, // espaco para conteudo dinamico
 
 ) {
     Card(
@@ -176,19 +182,19 @@ fun SectionCard(
             ) {
                 Text(text = title, color = TextWhite, fontWeight = FontWeight.Bold, fontSize = 16.sp)
                 Text(text = linkText, color = PrimaryBlue, fontSize = 12.sp, modifier = Modifier
-                    .clickable { onLinkClick() } // Adiciona o clique
+                    .clickable { onLinkClick() } // torna o texto clicavel
                     .padding(4.dp))
             }
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            // Aqui renderizamos o conteúdo específico de cada card
+            // conteúdo específico de cada card
             content()
         }
     }
 }
 
-// --- CARD DE ESTATÍSTICA (Topo) ---
+// CARD DE ESTATÍSTICA
 @Composable
 fun TaskStatCard(
     title: String,
@@ -223,7 +229,7 @@ fun TaskStatCard(
     }
 }
 
-// --- ITEM DA LISTA DE TAREFAS ---
+// ITEM DA LISTA DE TAREFAS
 @Composable
 fun TaskItem(
     task: Task,
@@ -285,6 +291,7 @@ fun TaskItem(
                 }
             }
 
+            // botao de excluir
             IconButton(onClick = { onDelete(task) }) {
                 Icon(Icons.Outlined.Delete, contentDescription = "Excluir", tint = Color.Red.copy(alpha = 0.6f))
             }
