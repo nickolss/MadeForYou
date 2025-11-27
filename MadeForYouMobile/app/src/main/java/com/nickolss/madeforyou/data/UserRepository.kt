@@ -11,9 +11,11 @@ import java.util.concurrent.TimeUnit
 
 class UserRepository {
 
+    // configuracao do cliente http
     private val client: OkHttpClient by lazy {
         val logging = HttpLoggingInterceptor().apply { level = HttpLoggingInterceptor.Level.BODY }
         OkHttpClient.Builder()
+            // timeout para lidar com o delay do render
             .addInterceptor(logging)
             .connectTimeout(60, TimeUnit.SECONDS)
             .readTimeout(60, TimeUnit.SECONDS)
@@ -21,6 +23,7 @@ class UserRepository {
             .build()
     }
 
+    // instancia da API
     private val api: ApiService by lazy {
         Retrofit.Builder()
             .baseUrl("https://made-for-you.onrender.com/")
@@ -30,6 +33,7 @@ class UserRepository {
             .create(ApiService::class.java)
     }
 
+    // BUSCAR PERFIL
     suspend fun getUserProfile(userId: String): UserProfile? {
         return try {
             api.getUserProfile(userId)
@@ -39,13 +43,14 @@ class UserRepository {
         }
     }
 
+    // ATUALIZAR PERFIL
     suspend fun updateUserProfile(userId: String, firstName: String, lastName: String, displayName: String): Boolean {
         return try {
             val request = UserUpdateRequest(
                 firstName = firstName,
                 lastName = lastName,
-                displayName = displayName, // Opcional, mas bom manter sincronizado
-                avatarUrl = null // Não estamos tratando upload de imagem por enquanto
+                displayName = displayName,
+                avatarUrl = null
             )
             api.updateUserProfile(userId, request)
             true
