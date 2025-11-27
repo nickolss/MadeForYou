@@ -37,7 +37,7 @@ class MainActivity : ComponentActivity() {
 
                 when (currentScreen) {
                     "login" -> LoginScreen(
-                        authRepository = authRepository, // Mantendo como você já tinha
+                        authRepository = authRepository, // instancia do repository p/ o login
                         onLoginSuccess = {
                             currentScreen = "home"
                         },
@@ -47,7 +47,7 @@ class MainActivity : ComponentActivity() {
                     )
 
                     "register" -> RegisterScreen(
-                        authRepository = authRepository, // Mantendo como você já tinha
+                        authRepository = authRepository, // instancia do Authrepository p/ o registro
                         onRegisterSuccess = {
                             currentScreen = "home"
                         },
@@ -56,7 +56,7 @@ class MainActivity : ComponentActivity() {
                         }
                     )
 
-                    // --- NOVA TELA DE TAREFAS ---
+                    // TAREFAS
                     "tasks" -> {
                         val userId = authRepository.currentUser?.uid ?: ""
                         if (userId.isNotEmpty()) {
@@ -70,12 +70,12 @@ class MainActivity : ComponentActivity() {
                         }
                     }
 
-                    // --- TELA PRINCIPAL (DASHBOARD) ---
+                    // TELA PRINCIPAL DASHBOARD
                     "home" -> HomeScreen(
-                        // 1. Passa o ID para carregar os dados
+                        // Passa o ID para carregar os dados
                         userId = authRepository.currentUser?.uid ?: "",
 
-                        // 2. Passa o Nome/Email para a saudação
+                        // Passa o Nome/Email para a saudação
                         userName = authRepository.currentUser?.email ?: "Usuário",
 
                         onLogout = {
