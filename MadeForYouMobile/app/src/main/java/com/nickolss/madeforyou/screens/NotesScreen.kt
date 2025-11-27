@@ -100,7 +100,6 @@ fun NotesScreen(userId: String, onBack: () -> Unit) {
     val pinnedCount = notes.count { it.isPinned }
     val distinctCategories = notes.map { it.category }.filter { it.isNotEmpty() }.distinct()
     val categoriesCount = distinctCategories.size
-    // Lógica simplificada para "Esta Semana" (Data de hoje)
     val thisWeekCount = notes.count { it.createdAt?.startsWith(LocalDate.now().year.toString()) == true }
 
     // Filtragem
@@ -151,7 +150,7 @@ fun NotesScreen(userId: String, onBack: () -> Unit) {
                     shape = RoundedCornerShape(8.dp)
                 )
 
-                // Dropdown simples de categoria
+                // Dropdown de categoria
                 var expandedCat by remember { mutableStateOf(false) }
                 Box {
                     Button(onClick = { expandedCat = true }, colors = ButtonDefaults.buttonColors(containerColor = CardBackground), shape = RoundedCornerShape(8.dp), modifier = Modifier.height(56.dp)) {
