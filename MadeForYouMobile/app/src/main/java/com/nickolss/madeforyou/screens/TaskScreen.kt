@@ -137,7 +137,7 @@ fun TasksScreen(userId: String, onBack: () -> Unit) {
     ) { padding ->
         Column(modifier = Modifier.padding(padding).padding(16.dp)) {
 
-            // 1. CARDS DE ESTATÍSTICA (Grid 2x2 simulado com Rows)
+            // CARDS DE ESTATÍSTICA
             Row(modifier = Modifier.fillMaxWidth()) {
                 TaskStatCard("Total", "$totalTasks", "Total", Icons.Default.BarChart, PrimaryBlue, Modifier.weight(1f))
                 TaskStatCard("Concluídas", "$completedTasks", "Concluídas", Icons.Default.CheckCircle, FinanceGreen, Modifier.weight(1f))
@@ -149,7 +149,7 @@ fun TasksScreen(userId: String, onBack: () -> Unit) {
 
             Spacer(modifier = Modifier.height(24.dp))
 
-            // 2. FILTROS E BUSCA
+            // FILTROS E BUSCA
             Column {
                 Row(modifier = Modifier.fillMaxWidth().background(CardBackground, RoundedCornerShape(8.dp)).padding(4.dp)) {
                     listOf("Todas", "Pendentes", "Concluídas").forEach { tab ->
@@ -186,10 +186,8 @@ fun TasksScreen(userId: String, onBack: () -> Unit) {
             Text("Tarefas", color = TextWhite, fontWeight = FontWeight.Bold)
             Spacer(modifier = Modifier.height(8.dp))
 
-            // 3. LISTA DE TAREFAS
-            // PARTE DA LISTA (Onde deu o erro)
+            // LISTA DE TAREFAS
             LazyColumn {
-                // MUDANÇA AQUI: De 'tasks' para 'filteredTasks'
                 items(filteredTasks) { task ->
                     TaskItem(
                         task = task,
@@ -200,7 +198,7 @@ fun TasksScreen(userId: String, onBack: () -> Unit) {
                                 if (index != -1) {
                                     val updatedTask = t.copy(isCompleted = !t.isCompleted)
 
-                                    // Atualiza a lista principal (o Compose vai recalcular o filtro automaticamente)
+                                    // Atualiza a lista principal 
                                     tasks[index] = updatedTask
 
                                     // Chama a API
@@ -222,7 +220,7 @@ fun TasksScreen(userId: String, onBack: () -> Unit) {
                     )
                 }
 
-                // Dica extra: Mensagem de lista vazia
+                // Mensagem de lista vazia
                 if (filteredTasks.isEmpty()) {
                     item {
                         Box(modifier = Modifier.fillMaxWidth().padding(32.dp), contentAlignment = Alignment.Center) {
@@ -245,7 +243,7 @@ fun TasksScreen(userId: String, onBack: () -> Unit) {
             onDismiss = { showDialog = false },
             onConfirm = { desc, prio, cat, dateStr ->
                 scope.launch {
-                    // 1. CONVERTER A DATA (de dd/mm/aaaa para aaaa-mm-dd)
+                    // convercao da data (de dd/mm/aaaa para aaaa-mm-dd)
                     val dateFormatted = try {
                         if (dateStr.contains("/")) {
                             val parts = dateStr.split("/")
@@ -256,7 +254,7 @@ fun TasksScreen(userId: String, onBack: () -> Unit) {
                         java.time.LocalDate.now().toString()
                     }
 
-                    // 2. CONVERTER A PRIORIDADE (Português -> Inglês minúsculo)
+                    // convercao da prioridade (Português -> Inglês minúsculo)
                     // O backend espera: "low", "medium", "high"
                     val priorityApi = when (prio) {
                         "Alta" -> "high"
@@ -267,18 +265,18 @@ fun TasksScreen(userId: String, onBack: () -> Unit) {
 
                     println("DEBUG: Enviando Data: $dateFormatted e Prioridade: $priorityApi")
 
-                    // 3. CRIAR O OBJETO
+                    // CRIAR O OBJETO
                     val newTask = Task(
                         id = null,
                         userId = userId, // Vai para a URL
                         description = desc, // Vai para o corpo como "text"
                         priority = priorityApi, // "medium"
                         category = cat,
-                        dueDate = dateFormatted, // "2025-11-24"
+                        dueDate = dateFormatted,
                         isCompleted = false
                     )
 
-                    // 4. CHAMAR A API (APENAS UMA VEZ)
+                    // CHAMAR A API
                     val sucesso = taskRepository.saveTask(newTask)
 
                     if (sucesso) {
