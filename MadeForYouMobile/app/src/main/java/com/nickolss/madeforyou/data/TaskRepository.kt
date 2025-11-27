@@ -11,20 +11,20 @@ import java.util.concurrent.TimeUnit
 
 class TaskRepository {
 
-    // 1. Configurar o Cliente HTTP com Timeout maior (para a Render acordar)
+    // configuracao do cliente http
     private val client: OkHttpClient by lazy {
         val logging = HttpLoggingInterceptor()
-        logging.setLevel(HttpLoggingInterceptor.Level.BODY) // Isso vai mostrar o JSON no Logcat
+        logging.setLevel(HttpLoggingInterceptor.Level.BODY) 
 
+        // timeout para lidar com o delay do render
         OkHttpClient.Builder()
             .addInterceptor(logging)
-            .connectTimeout(60, TimeUnit.SECONDS) // Aumenta para 60 segundos
-            .readTimeout(60, TimeUnit.SECONDS)    // Aumenta para 60 segundos
-            .writeTimeout(60, TimeUnit.SECONDS)
+            .connectTimeout(60, TimeUnit.SECONDS) 
+            .readTimeout(60, TimeUnit.SECONDS)    
             .build()
     }
 
-    // 2. Configurar o Retrofit usando esse cliente
+    // instancia da interface da api
     private val api: ApiService by lazy {
         Retrofit.Builder()
             .baseUrl("https://made-for-you.onrender.com/")
@@ -36,7 +36,7 @@ class TaskRepository {
 
 
 
-    // Buscar Tarefas
+    // BUSCAR TAREFAS
     suspend fun getTasks(userId: String): List<Task> {
         return try {
             api.getTasks(userId)
@@ -46,12 +46,12 @@ class TaskRepository {
         }
     }
 
-    // Salvar (Criar ou Atualizar)
+    // SALVAR (CRIAR OU ATUALIZAR)
     suspend fun saveTask(task: Task): Boolean {
         return try {
             val response = if (task.id == null) {
-                // --- CRIAÇÃO ---
-                // Preparamos o objeto EXATO que o Swagger pede
+                
+                // CRIACAO
                 val requestBody = TaskRequest(
                     description = task.description,
                     isCompleted = task.isCompleted,
@@ -60,17 +60,16 @@ class TaskRepository {
                     dueDate = task.dueDate
                 )
 
-                // Enviamos: userId na URL, requestBody no JSON
+                // Envia o userId na URL e os dados no body
                 val uid = task.userId ?: ""
                 api.createTask(uid, requestBody)
 
             } else {
-                // --- ATUALIZAÇÃO ---
+                // ATUALIZACAO
                 api.updateTask(task.id, task)
             }
 
             if (!response.isSuccessful) {
-                // Dica: Isso imprime o erro real do servidor
                 println("ERRO API (${response.code()}): ${response.errorBody()?.string()}")
             }
 
@@ -81,8 +80,7 @@ class TaskRepository {
         }
     }
 
-    // Deletar
-    // MUDANÇA: Agora recebe taskId E userId
+    // DELETAR
     suspend fun deleteTask(taskId: Int, userId: String): Boolean {
         return try {
             val response = api.deleteTask(taskId, userId)
