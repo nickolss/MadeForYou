@@ -11,8 +11,6 @@ import java.util.concurrent.TimeUnit
 
 class ProjectRepository {
 
-
-
     private val client: OkHttpClient by lazy {
         val logging = HttpLoggingInterceptor().apply { level = HttpLoggingInterceptor.Level.BODY }
         OkHttpClient.Builder()
@@ -32,6 +30,7 @@ class ProjectRepository {
             .create(ApiService::class.java)
     }
 
+    // LISTAGEM
     suspend fun getProjects(userId: String): List<Project> {
         return try {
             api.getProjects(userId)
@@ -41,6 +40,7 @@ class ProjectRepository {
         }
     }
 
+    // SALVAR
     suspend fun saveProject(project: Project): Boolean {
         return try {
             // Conversão para o Request Limpo
@@ -48,7 +48,7 @@ class ProjectRepository {
                 name = project.name,
                 description = project.description,
                 progress = project.progress,
-                status = project.status, // O app deve mandar em inglês se a API exigir
+                status = project.status, 
                 priority = project.priority,
                 startDate = project.startDate,
                 dueDate = project.dueDate,
@@ -60,8 +60,6 @@ class ProjectRepository {
                 val uid = project.userId ?: ""
                 api.createProject(uid, request)
             } else {
-                // Se tiver edição no futuro, seria PUT/PATCH aqui
-                // Por enquanto retornamos false pois não implementamos edição
                 return false
             }
 
@@ -75,6 +73,7 @@ class ProjectRepository {
         }
     }
 
+    // DELETAR
     suspend fun deleteProject(id: Int, userId: String): Boolean {
         return try {
             val response = api.deleteProject(id, userId)
@@ -84,7 +83,7 @@ class ProjectRepository {
         }
     }
 
-    // NOVO: Função de Atualizar
+    // ATUALIZAR
     suspend fun updateProject(project: Project): Boolean {
         return try {
             // Prepara o JSON limpo
@@ -99,7 +98,7 @@ class ProjectRepository {
                 color = project.color ?: "#818CF8"
             )
 
-            // Garante que temos ID e UserID
+            // so atualiza se tiver ID do projeto e do dono
             if (project.id != null && project.userId != null) {
                 val response = api.updateProject(project.id, project.userId, request)
                 response.isSuccessful
