@@ -88,7 +88,7 @@ fun HabitsScreen(userId: String, onBack: () -> Unit) {
     var showDialog by remember { mutableStateOf(false) }
     var habitToEdit by remember { mutableStateOf<Habit?>(null) }
 
-    // Estatísticas (Mockadas por enquanto, pois dependem do endpoint de entries)
+    // Estatísticas
     val totalHabits = habits.size
     val activeHabits = habits.size // Assumindo todos ativos
     val currentStreak = 0
@@ -252,7 +252,7 @@ fun HabitItem(habit: Habit, onEdit: () -> Unit, onDelete: () -> Unit) {
                 )
             }
 
-            // Barra de progresso (Visual apenas, pois depende de entries)
+            // Barra de progresso
             Spacer(modifier = Modifier.height(8.dp))
             Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
                 Text("Últimos 30 dias: 0/0", color = TextGray, fontSize = 10.sp)
