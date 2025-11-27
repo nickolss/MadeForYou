@@ -113,7 +113,7 @@ fun LoginScreen(
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            // --- CAMPO SENHA ---
+            // CAMPO SENHA
             OutlinedTextField(
                 value = password,
                 onValueChange = { password = it },
