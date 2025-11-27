@@ -75,7 +75,7 @@ fun ProfileScreen(userId: String, onBack: () -> Unit, onLogout: () -> Unit) {
     var email by remember { mutableStateOf("") }
     var displayName by remember { mutableStateOf("") } // Nome de exibição (apelido)
 
-    // Campos Visuais (Não salvam no banco, conforme pedido)
+    // Campos Visuais
     var phone by remember { mutableStateOf("") }
     var bio by remember { mutableStateOf("") }
 
@@ -122,11 +122,11 @@ fun ProfileScreen(userId: String, onBack: () -> Unit, onLogout: () -> Unit) {
             Text("Gerencie suas informações pessoais e configurações da conta", color = TextGray, fontSize = 14.sp)
             Spacer(Modifier.height(24.dp))
 
-            // --- CARD 1: FOTO DE PERFIL ---
+            // CARD 1: FOTO DE PERFIL ---
             Card(colors = CardDefaults.cardColors(containerColor = CardBackground), shape = RoundedCornerShape(12.dp), modifier = Modifier.fillMaxWidth()) {
                 Column(Modifier.padding(24.dp).fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
                     Box {
-                        // Avatar Placeholder (Bola com Inicial)
+                        // Avatar Placeholder 
                         Box(
                             modifier = Modifier
                                 .size(100.dp)
@@ -160,7 +160,7 @@ fun ProfileScreen(userId: String, onBack: () -> Unit, onLogout: () -> Unit) {
 
             Spacer(Modifier.height(24.dp))
 
-            // --- CARD 2: INFORMAÇÕES PESSOAIS ---
+            // CARD 2: INFORMAÇÕES PESSOAIS
             Card(colors = CardDefaults.cardColors(containerColor = CardBackground), shape = RoundedCornerShape(12.dp), modifier = Modifier.fillMaxWidth()) {
                 Column(Modifier.padding(24.dp)) {
                     Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
@@ -183,7 +183,7 @@ fun ProfileScreen(userId: String, onBack: () -> Unit, onLogout: () -> Unit) {
                         Box(Modifier.weight(1f)) { CustomInput(value = lastName, onValueChange = { lastName = it }, label = "Sobrenome") }
                     }
 
-                    // E-mail (Leitura apenas)
+                    // E-mail
                     OutlinedTextField(
                         value = email, onValueChange = {}, label = { Text("E-mail", color = TextGray) },
                         readOnly = true,
@@ -212,7 +212,7 @@ fun ProfileScreen(userId: String, onBack: () -> Unit, onLogout: () -> Unit) {
 
             Spacer(Modifier.height(24.dp))
 
-            // --- CARD 3: SEGURANÇA ---
+            // CARD 3: SEGURANÇA
             Card(colors = CardDefaults.cardColors(containerColor = CardBackground), shape = RoundedCornerShape(12.dp), modifier = Modifier.fillMaxWidth()) {
                 Column(Modifier.padding(24.dp)) {
                     Row(verticalAlignment = Alignment.CenterVertically) {
@@ -256,7 +256,7 @@ fun ProfileScreen(userId: String, onBack: () -> Unit, onLogout: () -> Unit) {
 
             Spacer(Modifier.height(24.dp))
 
-            // --- CARD 4: SESSÕES ---
+            // CARD 4: SESSÕES
             Card(colors = CardDefaults.cardColors(containerColor = CardBackground), shape = RoundedCornerShape(12.dp), modifier = Modifier.fillMaxWidth()) {
                 Column(Modifier.padding(24.dp)) {
                     Text("Sessões Ativas", color = TextWhite, fontWeight = FontWeight.Bold)
