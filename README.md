@@ -45,4 +45,4 @@ Certifique-se de ter instalado:
 *   Uma conta no [Firebase Console](https://console.firebase.google.com/)
 
 ### 2. Configuração do Banco de Dados
-PostgreSQL
+PostgreSQL.
